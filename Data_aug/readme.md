@@ -6,4 +6,6 @@
 --aug_p 0.2  
 
 # Colab Usage  
+!pip install transformers  
+!pip install numpy requests nlpaug  
 
