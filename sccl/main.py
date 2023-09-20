@@ -3,6 +3,7 @@ import sys
 sys.path.append( './' )
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+import joblib
 import torch
 import argparse
 from models.Transformers import SCCLBert
@@ -51,8 +52,7 @@ def run(args):
     all_embeddings = torch.cat(all_embeddings, dim=0)  
     
     # Return embeddings and cluster centers  
-    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()
-    
+    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()    
 
 def get_args(argv):
     parser = argparse.ArgumentParser()
@@ -95,19 +95,20 @@ def get_args(argv):
 
     return args
 
-
-
 if __name__ == '__main__':
     import subprocess
        
     args = get_args(sys.argv[1:])
-
+    
     if args.train_instance == "sagemaker":
-        run(args)
+        embeddings, cluster_centers = run(args)
+        joblib.dump(embeddings, 'embeddings.pkl')
+        joblib.dump(cluster_centers, 'cluster_centers.pkl')
         subprocess.run(["aws", "s3", "cp", "--recursive", args.resdir, args.s3_resdir])
     else:
-        run(args)
-            
+        embeddings, cluster_centers = run(args)
+        joblib.dump(embeddings, 'embeddings.pkl')
+        joblib.dump(cluster_centers, 'cluster_centers.pkl')            
 
 
 
