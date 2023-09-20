@@ -35,7 +35,7 @@ def explict_augmentation_loader(args):
     train_text2 = train_data[args.augmentation_2].fillna('.').values
 
     train_dataset = ExplitAugSamples(train_text, train_text1, train_text2)
-    train_loader = util_data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
+    train_loader = util_data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2)
     return train_loader
 
 
