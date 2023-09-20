@@ -41,7 +41,7 @@ class SCCLvTrainer(nn.Module):
         
 
     def prepare_transformer_input(self, batch):
-        if len(batch) == 4:
+        if len(batch) == 3:
             text1, text2, text3 = batch['text'], batch['augmentation_1'], batch['augmentation_2']
             feat1 = self.get_batch_token(text1)
             feat2 = self.get_batch_token(text2)
@@ -50,7 +50,7 @@ class SCCLvTrainer(nn.Module):
             input_ids = torch.cat([feat1['input_ids'].unsqueeze(1), feat2['input_ids'].unsqueeze(1), feat3['input_ids'].unsqueeze(1)], dim=1)
             attention_mask = torch.cat([feat1['attention_mask'].unsqueeze(1), feat2['attention_mask'].unsqueeze(1), feat3['attention_mask'].unsqueeze(1)], dim=1)
             
-        elif len(batch) == 2:
+        elif len(batch) == 1:
             text = batch['text']
             feat1 = self.get_batch_token(text)
             feat2 = self.get_batch_token(text)
