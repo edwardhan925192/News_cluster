@@ -35,9 +35,24 @@ def run(args):
     optimizer = get_optimizer(model, args)
     
     trainer = SCCLvTrainer(model, tokenizer, optimizer, train_loader, args)
-    trainer.train()
+    trainer.train()  
+
+    # ================== Newly added ==================== #
+    # Store all embeddings from training data  
+    all_embeddings = []  
     
-    return None
+    # Iterate through the training loader to get the embeddings  
+    for batch in train_loader:  
+        input_ids, attention_mask = batch['input_ids'].cuda(), batch['attention_mask'].cuda()  
+        embeddings = model.get_mean_embeddings(input_ids, attention_mask)  
+        all_embeddings.append(embeddings)  
+    
+    # Stack all embeddings  
+    all_embeddings = torch.cat(all_embeddings, dim=0)  
+    
+    # Return embeddings and cluster centers  
+    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()
+    
 
 def get_args(argv):
     parser = argparse.ArgumentParser()
