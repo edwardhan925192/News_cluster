@@ -45,8 +45,12 @@ class SCCLBert(nn.Module):
             mean_output_1 = self.get_mean_embeddings(input_ids_1, attention_mask_1)
             mean_output_2 = self.get_mean_embeddings(input_ids_2, attention_mask_2)
             mean_output_3 = self.get_mean_embeddings(input_ids_3, attention_mask_3)
-            return mean_output_1, mean_output_2, mean_output_3
-        
+            return mean_output_1, mean_output_2, mean_output_3  
+            
+        elif task_type == "centroids":  
+            mean_output = self.get_mean_embeddings(input_ids, attention_mask)  
+            return self.cluster_centers, mean_output  
+            
         else:
             raise Exception("TRANSFORMER ENCODING TYPE ERROR! OPTIONS: [EVALUATE, VIRTUAL, EXPLICIT]")
       
