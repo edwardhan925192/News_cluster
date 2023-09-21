@@ -1,8 +1,12 @@
-09/20 
+09/21 
 
 SCCL 
 * Allowed to have different model
 * Allowed to take CLS_use as an argument. (this allow user to use CLS token for embedding instead of using aggregated means) 
+* returning both assignments and embeddings 
 
-- maybe I should return both embedding and assignment to see how well they are clustered? 
-not tried this before 
+visualization 
+* Umap included in the section for visualization
+
+- autoregressive 
+
