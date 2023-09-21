@@ -110,9 +110,8 @@ if __name__ == '__main__':
     args = get_args(sys.argv[1:])
     
     if args.train_instance == "sagemaker":
-        embeddings, cluster_centers = run(args)
-        joblib.dump(embeddings, 'embeddings.pkl')
-        joblib.dump(cluster_centers, 'cluster_centers.pkl')
+        assignments = run(args)
+        joblib.dump(assignments, 'assignments.pkl')        
         subprocess.run(["aws", "s3", "cp", "--recursive", args.resdir, args.s3_resdir])
     else:
         embeddings, cluster_centers = run(args)
