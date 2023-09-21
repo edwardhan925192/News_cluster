@@ -55,7 +55,7 @@ def run(args):
     
     # Stack all embeddings  
     all_embeddings_np = torch.cat(all_embeddings, dim=0).cpu().numpy()
-    cluster_centers_np = model.cluster_centers.cpu().numpy()
+    cluster_centers_np = model.cluster_centers.detach().cpu().numpy()
     
     # Assign embeddings to closest center
     assignments = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
