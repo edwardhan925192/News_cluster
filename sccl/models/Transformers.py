@@ -6,9 +6,11 @@ from transformers import BertPreTrainedModel
 # from transformers import AutoModel, AutoTokenizer
 
 class SCCLBert(nn.Module):
-    def __init__(self, bert_model, tokenizer, cluster_centers=None, alpha=1.0):
+    def __init__(self, bert_model, tokenizer, cluster_centers=None, alpha=1.0, use_cls = False ):
         super(SCCLBert, self).__init__()
         
+        # ==================== Newly Changed ==================== #
+        self.use_cls = use_cls
         self.tokenizer = tokenizer
         self.bert = bert_model
         self.emb_size = self.bert.config.hidden_size
@@ -57,9 +59,18 @@ class SCCLBert(nn.Module):
     
     def get_mean_embeddings(self, input_ids, attention_mask):
         bert_output = self.bert.forward(input_ids=input_ids, attention_mask=attention_mask)
-        attention_mask = attention_mask.unsqueeze(-1)
-        mean_output = torch.sum(bert_output[0]*attention_mask, dim=1) / torch.sum(attention_mask, dim=1)
-        return mean_output
+        
+        # ===================================================== #
+        # ==================== Newly Updated ================== #
+        # ===================================================== #
+        if self.use_cls:
+            # Use the embedding of the [CLS] token
+            cls_output = bert_output[0][:, 0, :]
+            return cls_output
+        else:
+            attention_mask = attention_mask.unsqueeze(-1)
+            mean_output = torch.sum(bert_output[0]*attention_mask, dim=1) / torch.sum(attention_mask, dim=1)
+            return mean_output
     
 
     def get_cluster_prob(self, embeddings):
