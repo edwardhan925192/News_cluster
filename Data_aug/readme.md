@@ -6,6 +6,8 @@ python contextual_aug.py \
 --aug_p 0.2  
 
 # Colab Usage  
+!git clone   
+%cd '/content/News_cluster/Data_aug'  
 !pip install transformers  
 !pip install numpy requests nlpaug  
 
