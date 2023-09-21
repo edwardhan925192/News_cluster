@@ -1,0 +1,5 @@
+09/20 
+
+SCCL 
+* Allowed to have different model
+* Allowed to take CLS_use as an argument. (this allow user to use CLS token for embedding instead of using aggregated means) 
