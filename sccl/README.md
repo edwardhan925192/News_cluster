@@ -35,26 +35,26 @@ step-2. then obtain the augmented data using the code in ./AugData/
 step-3 run the code via the following:
 
 ```python
-python3 main.py \
-        --resdir $path-to-store-your-results \
-        --use_pretrain SBERT \
-        --bert distilbert \
-        --datapath $path-to-your-data \
-        --dataname searchsnippets_trans_subst_20 \
-        --num_classes 8 \
-        --text text \
-        --label label \
-        --objective SCCL \
-        --augtype explicit \
-        --temperature 0.5 \
-        --eta 10 \
-        --lr 1e-05 \
-        --lr_scale 100 \
-        --max_length 32 \
-        --batch_size 400 \
-        --max_iter 3000 \
-        --print_freq 100 \
-        --gpuid 0 &
+!python main.py \
+--resdir '/content/sccl'\
+--use_pretrain SBERT \
+--bert distilbert \
+--use_cls \  
+--datapath '/content/'\
+--dataname 'aug_med'\
+--num_classes 8 \
+--text text \
+--objective SCCL \
+--augtype explicit \
+--temperature 0.5 \
+--eta 10 \
+--lr 1e-05 \
+--lr_scale 100 \
+--max_length 40 \
+--batch_size 50 \
+--max_iter 1100 \
+--print_freq 100 \
+--gpuid 0 &
 
 ```
 
