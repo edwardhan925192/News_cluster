@@ -11,6 +11,7 @@ import dataloader.dataloader as dataloader
 from training import SCCLvTrainer
 from utils.kmeans import get_kmeans_centers, get_batch_token, get_mean_embeddings
 from utils.logger import setup_path, set_global_random_seed
+from utils.assign_center import assign_to_closest_center
 from utils.optimizer import get_optimizer, get_bert
 import numpy as np
 
@@ -53,11 +54,14 @@ def run(args):
             all_embeddings.append(embeddings)  
     
     # Stack all embeddings  
-    all_embeddings = torch.cat(all_embeddings, dim=0)  
+    all_embeddings_np = torch.cat(all_embeddings, dim=0).cpu().numpy()
+    cluster_centers_np = model.cluster_centers.cpu().numpy()
     
-    # Return embeddings and cluster centers  
-    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()   
-
+    # Assign embeddings to closest center
+    assignments = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
+    
+    return assignments      
+    
 def get_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_instance', type=str, default='local') 
