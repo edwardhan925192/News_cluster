@@ -11,14 +11,12 @@ This repository contains the code for our paper [Supporting Clustering with Cont
 ## Getting Started
 
 ### Dependencies:
-    python==3.6.13 
-    pytorch==1.6.0. 
-    sentence-transformers==2.0.0. 
-    transformers==4.8.1. 
-    tensorboardX==2.4.1
-    pandas==1.1.5
-    sklearn==0.24.1
-    numpy==1.19.5
+    !pip install sentence-transformers==2.0.0.
+    !pip install transformers
+    !pip install tensorboardX==2.4.1
+    !pip install sklearn==0.24.1
+    !pip install huggingface_hub
+    !pip install --upgrade sentence_transformers
       
 
 ### SCCL with explicit augmentations 
@@ -57,38 +55,6 @@ step-3 run the code via the following:
 --gpuid 0 &
 
 ```
-
-
-### SCCL with virtual augmentation 
-
-Download the original datastes from 
-https://github.com/rashadulrakib/short-text-clustering-enhancement/tree/master/data
-
-```python
-python3 main.py \
-        --resdir $path-to-store-your-results \
-        --use_pretrain SBERT \
-        --bert distilbert \
-        --datapath $path-to-your-data \
-        --dataname searchsnippets \
-        --num_classes 8 \
-        --text text \
-        --label label \
-        --objective SCCL \
-        --augtype virtual \
-        --temperature 0.5 \
-        --eta 10 \
-        --lr 1e-05 \
-        --lr_scale 100 \
-        --max_length 32 \
-        --batch_size 400 \
-        --max_iter 1000 \
-        --print_freq 100 \
-        --gpuid 1 &
-
-```
-
-
 
 ## Citation:
 
