@@ -43,18 +43,20 @@ def run(args):
     all_embeddings = []  
     
     # Iterate through the training loader to get the embeddings  
-    for batch in train_loader:  
-        text = batch['text']
-        tokenized_features = get_batch_token(tokenizer, text, args.max_length)
-        input_ids, attention_mask = tokenized_features['input_ids'].cuda(), tokenized_features['attention_mask'].cuda()
-        embeddings = model.get_mean_embeddings(input_ids, attention_mask)  
-        all_embeddings.append(embeddings)  
+    with torch.no_grad():
+        for batch in train_loader:  
+            text = batch['text']
+            tokenized_features = get_batch_token(tokenizer, text, args.max_length)
+            input_ids, attention_mask = tokenized_features['input_ids'].cuda(), tokenized_features['attention_mask'].cuda()
+            
+            embeddings = model.get_mean_embeddings(input_ids, attention_mask)  
+            all_embeddings.append(embeddings)  
     
     # Stack all embeddings  
     all_embeddings = torch.cat(all_embeddings, dim=0)  
     
     # Return embeddings and cluster centers  
-    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()   
+    return all_embeddings.cpu().numpy(), model.cluster_centers.cpu().numpy()   
 
 def get_args(argv):
     parser = argparse.ArgumentParser()
