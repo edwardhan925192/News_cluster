@@ -6,7 +6,10 @@ from sklearn.cluster import KMeans
 
 def get_embeddings(bert, input_ids, attention_mask, use_cls=False):
     bert_output = bert.forward(input_ids=input_ids, attention_mask=attention_mask)
-    
+
+    # ============================================ #
+    # ================= updated ================== #
+    # ============================================ #    
     if use_cls:
         return bert_output[0][:, 0, :]
     else:
@@ -31,6 +34,10 @@ def get_kmeans_centers(bert, tokenizer, train_loader, num_classes, max_length, u
 
         text = batch['text']
         tokenized_features = get_batch_token(tokenizer, text, max_length)
+
+        # ============================================ #
+        # ================= updated ================== #
+        # ============================================ #    
         corpus_embeddings = get_embeddings(bert, use_cls=use_cls, **tokenized_features)
         
         if i == 0:
