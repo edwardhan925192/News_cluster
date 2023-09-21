@@ -56,7 +56,7 @@ def run(args):
     all_embeddings = torch.cat(all_embeddings, dim=0)  
     
     # Return embeddings and cluster centers  
-    return all_embeddings.cpu().numpy(), model.cluster_centers.cpu().numpy()   
+    return all_embeddings.cpu().detach().numpy(), model.cluster_centers.cpu().detach().numpy()   
 
 def get_args(argv):
     parser = argparse.ArgumentParser()
