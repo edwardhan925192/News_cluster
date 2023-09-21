@@ -60,7 +60,7 @@ def run(args):
     # Assign embeddings to closest center
     assignments = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
     
-    return assignments      
+    return assignments , all_embeddings_np  
     
 def get_args(argv):
     parser = argparse.ArgumentParser()
@@ -110,12 +110,14 @@ if __name__ == '__main__':
     args = get_args(sys.argv[1:])
     
     if args.train_instance == "sagemaker":
-        assignments = run(args)
+        assignments, embeddings = run(args)
         joblib.dump(assignments, 'assignments.pkl')        
+        joblib.dump(embeddings, 'embeddings.pkl')        
         subprocess.run(["aws", "s3", "cp", "--recursive", args.resdir, args.s3_resdir])
     else:
-        assignments = run(args)
+        assignments, embeddings = run(args)
         joblib.dump(assignments, 'assignments.pkl')        
+        joblib.dump(embeddings, 'embeddings.pkl')        
 
 
     
