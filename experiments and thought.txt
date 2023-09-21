@@ -3,3 +3,6 @@
 SCCL 
 * Allowed to have different model
 * Allowed to take CLS_use as an argument. (this allow user to use CLS token for embedding instead of using aggregated means) 
+
+- maybe I should return both embedding and assignment to see how well they are clustered? 
+not tried this before 
