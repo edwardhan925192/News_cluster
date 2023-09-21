@@ -9,7 +9,7 @@ import argparse
 from models.Transformers import SCCLBert
 import dataloader.dataloader as dataloader
 from training import SCCLvTrainer
-from utils.kmeans import get_kmeans_centers, get_batch_token, get_mean_embeddings
+from utils.kmeans import get_kmeans_centers, get_batch_token, get_embeddings
 from utils.logger import setup_path, set_global_random_seed
 from utils.assign_center import assign_to_closest_center
 from utils.optimizer import get_optimizer, get_bert
