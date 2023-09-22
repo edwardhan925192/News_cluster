@@ -50,7 +50,7 @@ Whats returned (current dir)
 
 ** When using other transformer models don't pass use_pretrain arguments **  
 lr == contrast_head, cluster_centers, bert parameters   
-eta == weights given for between contrast loss and clustering   
+eta == weights ratio between contrast loss and clustering   
 
 
 
