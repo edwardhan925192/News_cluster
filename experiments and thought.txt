@@ -63,6 +63,81 @@ I can use it for checking whether the model is running properly or not
 
 among 6 categories I have choose one by looking at the content and title of news (business, entertainment,politics, sports, tech, world)
 
+
+
+assignment = joblib.load('/content/News_cluster/sccl/assignments.pkl')
+original = pd.read_csv('/content/drive/MyDrive/Edward Han/data/News_clustering/processed_news.csv')
+result = pd.concat([original,pd.Series(assignment)],axis =1) 
+
+********************* ********************* 
+result.columns = ['id','title','contents','category']
+result
+
+#Clustering phase 
+result.iloc[[16, 29, 50, 61, 63, 66 ,69, 71, 75, 77, 78, 82]] 
+#1, 5, 5, 4, 3 ,2
+#six 3s, seven 5s , all 5s, seven 4s , many 3s , many2s 
+
+# Replace values
+replace_map = {1: 0, 5: 1, 4: 3, 3:4, 2:5}  # Add more replacements as needed
+result['category'] = result['category'].replace(replace_map)
+result[['id','category']].to_csv('result.csv',index = False)
+********************* ********************* 
+
  ***** Observation 
-Entertainment is harder to capture (its closely related to politics and sports) 
+Entertainment is harder to capture (entertainment and politics ) 
 Maybe I have to do the clustering once again for these three types Making a distinction will be a key factor. 
+
+# ================================================= #
+  ===================== Plan =====================
+# ================================================= # 
+
+I need to augment capitalized Data which I think will show much better result (or not :() 
+Changing eta. 
+
+concatenated ones are much better. 
+
+take assignments , original csv files, numbers 
+
+return csv files with ordered category.
+
+***** experiments 
+different eta, temperature, learning rate, batch_size. 
+
+Use Ensemble method Voting probably Using three different results. 
+
+Robert
+
+# ================================================= #
+ ===================== What to do ==================
+# ================================================= # 
+
+Look up both entertainment and politics row 
+get the largest number take the index, save it to csv files again  
+
+I have to check the entertainment last and pick the numbers that are used the least first. 
+
+I MUST  GIVE ASSIGNMENTS TO TWO OR THREE ITS GONNA RAISE THE SCORE SUPER HIGH FOR SURE 
+
+*********************************************
+takes joblib lists (assignment) 
+takes path of csv files 
+takes number 
+concat result = pd.concat([original,pd.Series(assignment)],axis =1) 
+change the column name result.columns = ['id','title','contents','category']
+
+look up the columns 
+0 == Business (3, 4, 70, 79, 85, 93, 98, 99, 100, 102, 103)
+1 == Entertainment (39, 62, 64, 67, 68, 80, 84, 142, 147, 159 )
+2 == Politics (12, 14, 18, 19, 53, 54, 65, 81, 89, 91, 101)
+3 == sports (59997, 0, 38, 72, 88, 94, 96, 115, 116, 118, 121, 122)
+4 == Tech (52, 73, 74, 83, 92, 97, 110, 119, 123, 125)
+5 == World (16, 29, 50, 61, 63, 66 ,69, 71, 75, 77, 78, 82)
+
+and change the name of the category 
+so for example if we looked up 3,4,70,79 and so on and number 3 appears the most replace 3 to 0 
+if we look up 39,62,64,67 and so on and number 4 appeaars the most then replace 4 to 1 
+replace_map = {1: 0, 0:3, 4:2, 2:4}  # Add more replacements as needed
+result['category'] = result['category'].replace(replace_map)
+result[['id','category']].to_csv('result{number(taken from function)}.csv',index = False)
+and return csvfiles or save it in current dir. 
