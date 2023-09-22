@@ -11,7 +11,7 @@ import dataloader.dataloader as dataloader
 from training import SCCLvTrainer
 from utils.kmeans import get_kmeans_centers, get_batch_token, get_embeddings
 from utils.logger import setup_path, set_global_random_seed
-from utils.assign_center import assign_to_closest_center
+from utils.assign_center import assign_to_closest_centers
 from utils.optimizer import get_optimizer, get_bert
 import numpy as np
 
@@ -59,7 +59,7 @@ def run(args):
     cluster_centers_np = model.cluster_centers.detach().cpu().numpy()
     
     # Assign embeddings to closest center
-    assignments, distance = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
+    assignments, distance = assign_to_closest_centers(all_embeddings_np, cluster_centers_np)
     
     return assignments , all_embeddings_np , distance  
     
