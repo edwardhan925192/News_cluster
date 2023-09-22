@@ -1,4 +1,4 @@
-09/21 
+### 09/21/2023
 
 SCCL 
 * Allowed to have different model
@@ -10,3 +10,59 @@ visualization
 
 - autoregressive 
 
+### 09/22/2023 
+
+Made a new flow chart (mainly focused on general flow of main model) 
+
+***** Meaning of the arguments that are passed 
+***** what it returns 
+
+***** News cluster data folder is made 
+
+time 10:55
+***** closest distance 
+2개의 column이 쥐어쥠. 
+
+하나씩 clustering 한후
+일단 각각의 augment한다?! 
+
+방법1. 합치기 
+방법2. 따로 
+
+preprocessed by erasing all the punctuation, numbers,
+
+일단 따로 해서 각각의 결과를 test해봄 
+
+실험1. title만 가지고 내보기 --> Myungsoo (contents) 
+       내용만 가지고 내보기 --> Youngok (title) 
+
+실험2. concat --> myungsoo (augmenting) 
+
+
+Title took an hour 
+Contents taking ?!?!?!
+
+contextual augmentation takes long time to augment :( 
+
+I can also return the distance value so that when comparing title and contents I can choose between the two by looking at the distance. 
+
+concatenate title and contents and augment it seperately (what I can do for later) 
+
+I can use it for checking whether the model is running properly or not 
+
+() == index number 
+
+10개 종합 entertainment
+
+0 == Business (3, 4, 70, 79, 85, 93, 98, 99, 100, 102, 103)
+1 == Entertainment (39, 62, 64, 67, 68, 80, 84, 142, 147, 159 )
+2 == Politics (12, 14, 18, 19, 53, 54, 65, 81, 89, 91, 101)
+3 == sports (59997, 0, 38, 72, 88, 94, 96, 115, 116, 118, 121, 122)
+4 == Tech (52, 73, 74, 83, 92, 97, 110, 119, 123, 125)
+5 == World (16, 29, 50, 61, 63, 66 ,69, 71, 75, 77, 78, 82)
+
+among 6 categories I have choose one by looking at the content and title of news (business, entertainment,politics, sports, tech, world)
+
+ ***** Observation 
+Entertainment is harder to capture (its closely related to politics and sports) 
+Maybe I have to do the clustering once again for these three types Making a distinction will be a key factor. 
