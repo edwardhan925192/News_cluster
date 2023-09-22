@@ -1,14 +1,4 @@
-# SCCL: Supporting Clustering with Contrastive Learning 
-
-This repository contains the code for our paper [Supporting Clustering with Contrastive Learning (NAACL 2021)](https://aclanthology.org/2021.naacl-main.427.pdf) Dejiao Zhang, Feng Nan, Xiaokai Wei, Shangwen Li, Henghui Zhu, Kathleen McKeown, Ramesh Nallapati, Andrew Arnold, and Bing Xiang.
-
-**************************** **Updates** ****************************  
-* 09/20/2023: Updated to return centroid points and embeddings. (main)  
-* 12/11/2021: We updated our code. Now you can run SCCL with virtual augmentations only. 
-* 05/28/2021: We released our initial code for SCCL, which requires explicit data augmentations.
-
-
-## Getting Started
+# Usage  
 
 ### Dependencies:
     !pip install sentence-transformers==2.0.0.
@@ -26,11 +16,13 @@ In additional to the original data, SCCL requires a pair of augmented data for e
 The data format is (text, text1, text2) where text1 and text2 are the column names of augmented pairs. 
  See our NAACL paper for details about the learning objective. 
 
-Step-1. download the original datastes from https://github.com/rashadulrakib/short-text-clustering-enhancement/tree/master/data
+Step-1. Augment data. Follow the instruction in News_cluster/Aug
 
-step-2. then obtain the augmented data using the code in ./AugData/
+Step-2. Run the code 
 
-step-3 run the code via the following:
+Whats returned (current dir)  
+* Cluster assignments
+* embedding vectors  
 
 ```python
 !python main.py \
@@ -40,7 +32,7 @@ step-3 run the code via the following:
 --use_cls \  
 --datapath '/content/'\
 --dataname 'aug_med'\
---num_classes 8 \
+--num_classes 6 \
 --text text \
 --objective SCCL \
 --augtype explicit \
@@ -55,6 +47,12 @@ step-3 run the code via the following:
 --gpuid 0 &
 
 ```
+
+** When using other transformer models don't pass use_pretrain arguments **  
+lr == contrast_head, cluster_centers, bert parameters   
+eta == weights ratio between contrast loss and clustering   
+
+
 
 ## Citation:
 

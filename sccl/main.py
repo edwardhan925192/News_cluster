@@ -30,7 +30,8 @@ def run(args):
     # initialize cluster centers
     cluster_centers = get_kmeans_centers(bert, tokenizer, train_loader, args.num_classes, args.max_length, args.use_cls)
     
-    model = SCCLBert(bert, tokenizer, cluster_centers=cluster_centers, alpha=args.alpha) 
+    model = SCCLBert(bert, tokenizer, cluster_centers=cluster_centers, alpha=args.alpha, use_cls=args.use_cls) 
+
     model = model.cuda()
 
     # optimizer 
@@ -39,7 +40,7 @@ def run(args):
     trainer = SCCLvTrainer(model, tokenizer, optimizer, train_loader, args)
     trainer.train()  
 
-    # ================== Newly added ==================== #
+    # ================== 09/22 ==================== #
     # Store all embeddings from training data  
     all_embeddings = []  
     
@@ -58,9 +59,9 @@ def run(args):
     cluster_centers_np = model.cluster_centers.detach().cpu().numpy()
     
     # Assign embeddings to closest center
-    assignments = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
+    assignments, distance = assign_to_closest_center(all_embeddings_np, cluster_centers_np)
     
-    return assignments , all_embeddings_np  
+    return assignments , all_embeddings_np , distance  
     
 def get_args(argv):
     parser = argparse.ArgumentParser()
@@ -110,14 +111,16 @@ if __name__ == '__main__':
     args = get_args(sys.argv[1:])
     
     if args.train_instance == "sagemaker":
-        assignments, embeddings = run(args)
+        assignments, embeddings, distance = run(args)
         joblib.dump(assignments, 'assignments.pkl')        
-        joblib.dump(embeddings, 'embeddings.pkl')        
+        joblib.dump(embeddings, 'embeddings.pkl')   
+        joblib.dump(distance, 'distance.pkl')   
         subprocess.run(["aws", "s3", "cp", "--recursive", args.resdir, args.s3_resdir])
     else:
-        assignments, embeddings = run(args)
+        assignments, embeddings, distance = run(args)
         joblib.dump(assignments, 'assignments.pkl')        
         joblib.dump(embeddings, 'embeddings.pkl')        
+        joblib.dump(distance, 'distance.pkl')   
 
 
     
