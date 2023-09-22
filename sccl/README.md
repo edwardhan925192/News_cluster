@@ -18,7 +18,11 @@ The data format is (text, text1, text2) where text1 and text2 are the column nam
 
 Step-1. Augment data. Follow the instruction in News_cluster/Aug
 
-step-2. Run the code 
+Step-2. Run the code 
+
+Whats returned (current dir)  
+* Cluster assignments
+* embedding vectors  
 
 ```python
 !python main.py \
