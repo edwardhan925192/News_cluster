@@ -1,26 +1,25 @@
 import numpy as np
-from scipy.spatial import distance
 
-def assign_to_closest_center(embeddings, cluster_centers):
+def assign_to_closest_centers(embeddings, cluster_centers, n=3):
     """
-    Assigns each embedding to the closest cluster center and returns the distance.
-
-    Parameters:
-    - embeddings: numpy array of shape (num_embeddings, embedding_dim)
-    - cluster_centers: numpy array of shape (num_clusters, embedding_dim)
-
-    Returns:
-    - assignments: numpy array of shape (num_embeddings,) with the index of the closest center for each embedding
-    - closest_distances: numpy array of shape (num_embeddings,) with the distance to the closest center for each embedding
+    embedding 1,2,3 Closest
+    embedding 1,2,3 Next Closest
+    embedding 1,2,3 Next Next Closest
     """
+    distances = np.linalg.norm(embeddings[:, np.newaxis] - cluster_centers, axis=2)
+    
+    # Find the indices of the n closest centers for each embedding
+    assignments = np.argsort(distances, axis=1)[:, :n]
 
-    # Compute pairwise distances
-    distances = distance.cdist(embeddings, cluster_centers, 'euclidean')
+    # Get the distances to the n closest centers for each embedding
+    closest_distances = np.take_along_axis(distances, assignments, axis=1)
 
-    # Find the index of the closest center for each embedding
-    assignments = np.argmin(distances, axis=1)
+    assignments_ordered = []
+    closest_distances_ordered = []
 
-    # Get the distance to the closest center for each embedding
-    closest_distances = distances[np.arange(distances.shape[0]), assignments]
-
-    return assignments, closest_distances
+    # Order them consecutively for each embedding
+    for i in range(n):
+        assignments_ordered.extend(assignments[:, i])
+        closest_distances_ordered.extend(closest_distances[:, i])
+    
+    return np.array(assignments_ordered), np.array(closest_distances_ordered)
