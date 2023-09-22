@@ -48,7 +48,7 @@ Whats returned (current dir)
 
 ```
 
-** When using other transformer models don't pass use_pre-train arguments **
+** When using other transformer models don't pass use_pretrain arguments **
 
 
 ## Citation:
