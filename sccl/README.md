@@ -48,7 +48,10 @@ Whats returned (current dir)
 
 ```
 
-** When using other transformer models don't pass use_pretrain arguments **
+** When using other transformer models don't pass use_pretrain arguments **  
+lr == contrast_head, cluster_centers, bert parameters   
+eta == weights given for between contrast loss and clustering   
+
 
 
 ## Citation:
