@@ -51,7 +51,7 @@ Whats returned (current dir)
 ** When using other transformer models don't pass use_pretrain arguments **  
 lr == contrast_head, cluster_centers, bert parameters   
 eta == weights ratio between contrast loss and clustering   
-
+*** returns 3 closest assignments and 3 closest distances ***
 
 
 ## Citation:
