@@ -32,7 +32,7 @@ Whats returned (current dir)
 --use_cls \  
 --datapath '/content/'\
 --dataname 'aug_med'\
---num_classes 8 \
+--num_classes 6 \
 --text text \
 --objective SCCL \
 --augtype explicit \
