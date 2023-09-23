@@ -62,7 +62,15 @@ def run(args):
     assignments, distance = assign_to_closest_centers(all_embeddings_np, cluster_centers_np)
     
     return assignments , all_embeddings_np , distance  
-    
+
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+        
 def get_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_instance', type=str, default='local') 
@@ -71,7 +79,7 @@ def get_args(argv):
     parser.add_argument('--print_freq', type=float, default=100, help="")
     parser.add_argument('--resdir', type=str, default='./results/')
     parser.add_argument('--s3_resdir', type=str, default='./results')  
-    parser.add_argument('--use_cls', action='store_true', help="Use the CLS token for embedding instead of mean")
+    parser.add_argument('--use_cls', type=str2bool, default=False, help="Use the CLS token for embedding instead of mean")
     
     parser.add_argument('--bert', type=str, default='distilroberta', help="")
     parser.add_argument('--use_pretrain', type=str, default='BERT', choices=["BERT", "SBERT", "PAIRSUPCON"])
