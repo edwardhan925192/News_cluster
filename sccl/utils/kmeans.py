@@ -4,7 +4,7 @@ from utils.metric import Confusion
 from sklearn.cluster import KMeans
 
 
-def get_embeddings(bert,use_cls=False, input_ids, attention_mask ):
+def get_embeddings(bert,use_cls, input_ids, attention_mask ):
     bert_output = bert.forward(input_ids=input_ids, attention_mask=attention_mask)
 
     # ============================================ #
@@ -29,7 +29,7 @@ def get_batch_token(tokenizer, text, max_length):
     return token_feat
 
 
-def get_kmeans_centers(bert, tokenizer, train_loader, num_classes, max_length, use_cls=False):
+def get_kmeans_centers(bert, tokenizer, train_loader, num_classes, max_length, use_cls):
     for i, batch in enumerate(train_loader):
 
         text = batch['text']
