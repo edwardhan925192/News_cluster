@@ -26,26 +26,32 @@ def get_optimizer(model, args):
     return optimizer 
     
 
-def get_bert(args):    
+def get_bert(args):            
+    # Check if SBERT pretraining is specified
     if args.use_pretrain == "SBERT":
-        bert_model = get_sbert(args)
-        tokenizer = bert_model[0].tokenizer
-        model = bert_model[0].auto_model
-        print("..... loading Sentence-BERT !!!")
-        
-    elif args.bert.lower() == "deberta":  
-        config = AutoConfig.from_pretrained("microsoft/deberta-base")  
-        model = AutoModel.from_pretrained("microsoft/deberta-base", config=config)  
-        tokenizer = AutoTokenizer.from_pretrained("microsoft/deberta-base")  
-        print("..... loading DeBERTa !!!")  
-        
+        if args.bert in SBERT_CLASS:
+            sbert = SentenceTransformer(SBERT_CLASS[args.bert])
+            model = sbert.auto_model
+            tokenizer = sbert.tokenizer
+            print("..... loading Sentence-BERT !!!")
+        else:
+            raise ValueError(f"No SBERT model found for {args.bert}.")
     else:
-        config = AutoConfig.from_pretrained(BERT_CLASS[args.bert])
-        model = AutoModel.from_pretrained(BERT_CLASS[args.bert], config=config)
-        tokenizer = AutoTokenizer.from_pretrained(BERT_CLASS[args.bert])
-        print("..... loading plain BERT !!!")
-        
+        # Load plain BERT or DeBERTa based on args.bert
+        if args.bert.lower() == "deberta":
+            config = AutoConfig.from_pretrained("microsoft/deberta-base")  
+            model = AutoModel.from_pretrained("microsoft/deberta-base", config=config)  
+            tokenizer = AutoTokenizer.from_pretrained("microsoft/deberta-base")  
+            print("..... loading DeBERTa !!!")
+        elif args.bert in BERT_CLASS:
+            config = AutoConfig.from_pretrained(BERT_CLASS[args.bert])
+            model = AutoModel.from_pretrained(BERT_CLASS[args.bert], config=config)
+            tokenizer = AutoTokenizer.from_pretrained(BERT_CLASS[args.bert])
+            print("..... loading plain BERT !!!")
+        else:
+            raise ValueError(f"No model configuration found for {args.bert}.")
     return model, tokenizer
+
 
 
 def get_sbert(args):
