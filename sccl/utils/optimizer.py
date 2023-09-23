@@ -28,12 +28,12 @@ def get_optimizer(model, args):
 
 def get_bert(args):            
     # Check if SBERT pretraining is specified
-    if args.use_pretrain == "SBERT":
-        if args.bert in SBERT_CLASS:
-            sbert = SentenceTransformer(SBERT_CLASS[args.bert])
-            model = sbert._first_module()
-            tokenizer = sbert.tokenizer
-            print("..... loading Sentence-BERT !!!")
+    if args.use_pretrain == "SBERT":        
+        bert_model = get_sbert(args)
+        tokenizer = bert_model[0].tokenizer
+        model = bert_model[0].auto_model
+        print("..... loading Sentence-BERT !!!")
+        
         else:
             raise ValueError(f"No SBERT model found for {args.bert}.")
     else:
