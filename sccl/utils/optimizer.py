@@ -31,7 +31,7 @@ def get_bert(args):
     if args.use_pretrain == "SBERT":
         if args.bert in SBERT_CLASS:
             sbert = SentenceTransformer(SBERT_CLASS[args.bert])
-            model = sbert.auto_model
+            model = sbert._first_module()
             tokenizer = sbert.tokenizer
             print("..... loading Sentence-BERT !!!")
         else:
