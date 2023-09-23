@@ -34,8 +34,7 @@ def get_bert(args):
         model = bert_model[0].auto_model
         print("..... loading Sentence-BERT !!!")
         
-        else:
-            raise ValueError(f"No SBERT model found for {args.bert}.")
+        
     else:
         # Load plain BERT or DeBERTa based on args.bert
         if args.bert.lower() == "deberta":
