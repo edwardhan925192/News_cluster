@@ -4,7 +4,7 @@ from utils.metric import Confusion
 from sklearn.cluster import KMeans
 
 
-def get_embeddings(bert, input_ids, attention_mask, use_cls=False):
+def get_embeddings(bert,use_cls=False, input_ids, attention_mask ):
     bert_output = bert.forward(input_ids=input_ids, attention_mask=attention_mask)
 
     # ============================================ #
