@@ -11,7 +11,8 @@ from sentence_transformers import SentenceTransformer
 
 BERT_CLASS = {
     "distilbert": 'distilbert-base-uncased', 
-    "deberta": "microsoft/deberta-base"
+    "deberta": "microsoft/deberta-base",
+    "roberta": 'roberta-base'
 }
 
 SBERT_CLASS = {
@@ -47,11 +48,19 @@ def get_bert(args):
             model = AutoModel.from_pretrained("microsoft/deberta-base", config=config)  
             tokenizer = AutoTokenizer.from_pretrained("microsoft/deberta-base")  
             print("..... loading DeBERTa !!!")
+            
+        elif args.bert.lower() == "roberta":  
+            config = AutoConfig.from_pretrained(BERT_CLASS[args.bert])
+            model = AutoModel.from_pretrained(BERT_CLASS[args.bert], config=config)
+            tokenizer = AutoTokenizer.from_pretrained(BERT_CLASS[args.bert])
+            print("..... loading RoBERTa !!!")
+            
         elif args.bert in BERT_CLASS:
             config = AutoConfig.from_pretrained(BERT_CLASS[args.bert])
             model = AutoModel.from_pretrained(BERT_CLASS[args.bert], config=config)
             tokenizer = AutoTokenizer.from_pretrained(BERT_CLASS[args.bert])
             print("..... loading plain BERT !!!")
+            
         else:
             raise ValueError(f"No model configuration found for {args.bert}.")
     return model, tokenizer
