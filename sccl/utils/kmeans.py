@@ -38,6 +38,10 @@ def get_kmeans_centers(bert, tokenizer, train_loader, num_classes, max_length, u
         # ============================================ #
         # ================= updated ================== #
         # ============================================ #    
+        #if model_type not in ['bert', 'roberta']:          
+        
+        tokenized_features.pop('token_type_ids', None)
+        
         corpus_embeddings = get_embeddings(bert, use_cls=use_cls, **tokenized_features)
         
         if i == 0:
