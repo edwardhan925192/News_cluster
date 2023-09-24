@@ -1,6 +1,6 @@
 import numpy as np
 
-def assign_to_closest_centers(embeddings, cluster_centers, n=3):
+def assign_to_closest_centers(embeddings, cluster_centers, n=2):
     """
     embedding 1,2,3 Closest
     embedding 1,2,3 Next Closest
