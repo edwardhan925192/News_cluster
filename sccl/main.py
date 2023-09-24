@@ -28,8 +28,10 @@ def run(args):
     bert, tokenizer = get_bert(args)
     
     # initialize cluster centers
+    # CLS token passed 
     cluster_centers = get_kmeans_centers(bert, tokenizer, train_loader, args.num_classes, args.max_length, args.use_cls)
-    
+
+    # CLS token passed 
     model = SCCLBert(bert, tokenizer, cluster_centers=cluster_centers, alpha=args.alpha, use_cls=args.use_cls) 
 
     model = model.cuda()
